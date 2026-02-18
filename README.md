@@ -1,176 +1,63 @@
-\# 🏦 Credit Risk Analysis \& Prediction System (XGBoost)
+# 🏦 Kredi Risk Analizi ve Tahmin Sistemi (XGBoost)
 
+[![Python](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Framework-Flask-lightgrey.svg)](https://flask.palletsprojects.com/)
+[![Machine Learning](https://img.shields.io/badge/ML-XGBoost-orange.svg)](https://xgboost.readthedocs.io/)
 
-
-\[!\[Python](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
-
-\[!\[Flask](https://img.shields.io/badge/Framework-Flask-lightgrey.svg)](https://flask.palletsprojects.com/)
-
-\[!\[Machine Learning](https://img.shields.io/badge/ML-XGBoost-orange.svg)](https://xgboost.readthedocs.io/)
-
-
-
-Bu proje, bankacılık sektöründe kredi başvurularının risk durumunu (default risk) tahmin etmek amacıyla geliştirilmiş uçtan uca bir makine öğrenmesi uygulamasıdır. Mezuniyet projesi kapsamında, yüksek doğruluk ve özellikle finans dünyası için kritik olan \*\*Recall (duyarlılık)\*\* oranına odaklanılarak inşa edilmiştir.
-
-
+Bu proje, bankacılık sektöründe kredi başvurularının risk durumunu (default risk) tahmin etmek amacıyla geliştirilmiş uçtan uca bir makine öğrenmesi uygulamasıdır. Mezuniyet projem kapsamında, özellikle finans dünyası için kritik olan **Recall (Batığı Yakalama)** oranına odaklanılarak inşa edilmiştir.
 
 ---
 
+## 📌 Proje Özeti ve İş Problemi
 
+Bankalar için en büyük risk, geri ödenmeyen kredilerdir. Bu proje:
+- Müşteri verilerini analiz ederek potansiyel riskleri önceden tespit eder.
+- Veriye dayalı karar destek mekanizması ile kredi onay sürecini optimize eder.
+- **XGBoost** algoritması ile yüksek doğruluklu sonuçlar sunar.
 
-\## 📌 Proje Özeti ve İş Problemi
+## 🛠️ Teknik Mimari ve Süreç
 
+1. **Veri Ön İşleme:** Aykırı değerlerin temizlenmesi (Yaş, Gelir vb.) ve eksik verilerin median/mean ile doldurulması.
+2. **Özellik Mühendisliği:** Gelir verisinin normal dağılımı için Log dönüşümü ve `Interest Burden` (Faiz Yükü) gibi yeni değişkenlerin üretilmesi.
+3. **Model:** Sınıf dengesizliği (imbalance) dikkate alınarak optimize edilmiş **XGBoost Classifier**.
+4. **Dağıtım:** Kullanıcı dostu ve modern bir **Flask** web arayüzü.
 
+## 📊 Model Performansı
 
-Bankalar için en büyük maliyet kalemi, geri ödenmeyen kredilerdir (Bad Loans). Bu projenin amacı:
-
-\- Mevcut müşteri verilerini analiz ederek potansiyel riskleri önceden tespit etmek.
-
-\- Manuel değerlendirme sürecini hızlandırmak.
-
-\- Veriye dayalı karar destek mekanizması oluşturmak.
-
-
-
-
-
-
-
-\## 🛠️ Teknik Mimari ve Süreç
-
-
-
-Proje, veri temizliğinden dağıtıma kadar şu aşamalardan oluşmaktadır:
-
-
-
-1\. \*\*Veri Ön İşleme (Data Preprocessing):\*\* - Aykırı değerlerin (Outliers) temizlenmesi (Yaş > 100, Gelir > 300k vb.).
-
-&nbsp;  - Eksik verilerin (NaN) istatistiksel yöntemlerle (median/mean) doldurulması.
-
-&nbsp;  - Mantıksal hataların ayıklanması.
-
-2\. \*\*Özellik Mühendisliği (Feature Engineering):\*\*
-
-&nbsp;  - Gelir verisine Logaritmik dönüşüm uygulanarak normal dağılıma yaklaştırılması.
-
-&nbsp;  - `Interest Burden` (Faiz Yükü) gibi yeni finansal metriklerin üretilmesi.
-
-&nbsp;  - One-Hot Encoding ile kategorik verilerin sayısal formata çevrilmesi.
-
-3\. \*\*Model Eğitimi:\*\* - Sektör standardı olan \*\*XGBoost Classifier\*\* kullanılmıştır.
-
-&nbsp;  - Veri setindeki sınıf dengesizliği (imbalance) `scale\_pos\_weight` parametresi ile optimize edilmiştir.
-
-4\. \*\*Dağıtım (Deployment):\*\* - Model, kullanıcı dostu bir \*\*Flask\*\* web arayüzü ile sunulmaktadır.
-
-
-
-
-
-
-
-\## 📊 Model Performansı
-
-
-
-Modelin test verisi üzerindeki başarı metrikleri şöyledir:
-
-
+Modelin test verisi üzerindeki güncel başarı metrikleri:
 
 | Metrik | Skor |
-
 | :--- | :--- |
+| **Accuracy (Doğruluk)** | **%91.9** |
+| **Recall (Batığı Yakalama - Sınıf 1)** | **%78.0** |
+| **Precision (Keskinlik - Sınıf 1)** | **%84.0** |
+| **F1-Score** | **%81.0** |
 
-| \*\*Accuracy (Doğruluk)\*\* | %92 |
+> **Analiz:** Modelimiz, borcunu ödemeyecek 1361 riskli müşterinin **1061** tanesini başarıyla yakalamayı başarmıştır.
 
-| \*\*Recall (Batığı Yakalama)\*\* | \*\*%78\*\* |
+## 💻 Kurulum ve Çalıştırma
 
-| \*\*Precision (Keskinlik)\*\* | %84 |
+Proje **Conda** ortamı üzerinde stabil çalışmaktadır.
 
-| \*\*F1-Score\*\* | %81 |
+1. **Depoyu klonlayın:**
+   ```bash
+   git clone [https://github.com/yigiterenalp/credit_risk_prediction.git](https://github.com/yigiterenalp/credit_risk_prediction.git)
+   cd credit_risk_prediction
 
-
-
-> \*\*Not:\*\* Finansal risk yönetiminde, borcunu ödemeyecek müşteriyi kaçırmamak (Recall) kritik öneme sahiptir. Modelimiz riskli müşterilerin büyük bir çoğunluğunu başarıyla tespit etmektedir.
-
-
-
-
-
-
-
-\## 💻 Kurulum ve Çalıştırma
-
-
-
-Proje \*\*Conda\*\* ortamı üzerinde stabil çalışmaktadır.
-
-
-
-1\. \*\*Depoyu klonlayın:\*\*
-
-&nbsp;  ```bash
-
-&nbsp;  git clone \[https://github.com/kullanici\_adin/credit\_risk\_prediction.git](https://github.com/kullanici\_adin/credit\_risk\_prediction.git)
-
-&nbsp;  cd credit\_risk\_prediction
-
-
-
-Conda ortamını hazırlayın:
-
-
+   Conda ortamını hazırlayın:
 
 Bash
 
-
-
-conda create -n credit\_risk\_final python=3.10
-
-conda activate credit\_risk\_final
-
+conda create -n credit_risk_env python=3.10
+conda activate credit_risk_env
 Gerekli kütüphaneleri kurun:
 
-
-
 Bash
-
-
 
 pip install -r requirements.txt
-
 Uygulamayı başlatın:
-
-
 
 Bash
 
-
-
 python app.py
-
-Tarayıcınızdan http://127.0.0.1:5000 adresine giderek uygulamayı kullanmaya başlayabilirsiniz.
-
-
-
-📁 Dosya Yapısı
-
-app.py: Flask sunucusu ve tahmin motoru.
-
-
-
-xgb\_model.joblib: Eğitilmiş XGBoost model dosyası.
-
-
-
-scaler.joblib: Veri ölçeklendirme için kullanılan scaler.
-
-
-
-templates/: Web arayüzü (HTML) dosyaları.
-
-
-
-requirements.txt: Kütüphane bağımlılıkları.
-
+Tarayıcıdan http://127.0.0.1:5000 adresine giderek sistemi test edebilirsiniz.
